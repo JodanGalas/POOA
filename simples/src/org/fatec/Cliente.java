@@ -18,4 +18,9 @@ public class Cliente {
 		String dados = "Nome: " + nome + "\nTelefone: " + telefone;
 		return dados;
 	}
+	
+//	@Override
+//	protected void finalize() throws Throwable {
+//		System.out.println("Meu cliente morreu!!");
+//	}
 }
