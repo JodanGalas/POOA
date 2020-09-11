@@ -1,11 +1,16 @@
 package org.fatec;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class App {
 	public static void main(String[] args) {
 
 		Menu.imprimirMenu();
 		Controle controle = new Controle();
 		int escolha = controle.opcao();
+		
+		List<Cliente> astolphos = new ArrayList<>();
 		
 		while (escolha != 0) {
 			if(escolha == 1) {
@@ -14,7 +19,18 @@ public class App {
 				String nome = controle.texto(); 
 				String telefone = controle.texto();
 				Cliente cliente = new Cliente(nome, telefone);
+				astolphos.add(cliente);
+			}else if(escolha == 2) {
+				for (Cliente astolphinho : astolphos) {
+					System.out.println(astolphinho.getNome());
+				}
+			}else {
+				System.out.println("Então por favor escolha zero!!!");
 			}
+			
+			Menu.imprimirMenu();
+			controle = new Controle();
+			escolha = controle.opcao();
 		}
 		
 		
