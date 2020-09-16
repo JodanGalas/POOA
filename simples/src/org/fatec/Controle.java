@@ -3,28 +3,27 @@ package org.fatec;
 import java.util.Scanner;
 
 public class Controle {
-	// scanner -- input
-	private Scanner scanner;
+	private Scanner leitor;
 
 	public Controle() {
-		// System - significa o seu computador
-		// in - teclado
-		this.scanner = new Scanner(System.in);
+		leitor = new Scanner(System.in);
 	}
 
-	public int opcao() {
-		int op = scanner.nextInt();
+	public synchronized int opcao() {
+		int op = leitor.nextInt();
+		leitor = leitor.reset();
 		return op;
 	}
 
-	public String texto() {
-		String t = scanner.nextLine();
+	public synchronized String texto() {
+		leitor = new Scanner(System.in);
+		String t = leitor.nextLine();
+		leitor = leitor.reset();
 		return t;
 	}
 
-	// sobreescrever mais um metodo da classe Object
 	@Override
 	protected void finalize() throws Throwable {
-		scanner.close();
+		leitor.close();
 	}
 }
