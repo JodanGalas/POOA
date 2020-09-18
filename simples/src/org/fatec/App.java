@@ -1,10 +1,18 @@
 package org.fatec;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class App {
-	public static void main(String[] args) {
+	@SuppressWarnings("unchecked")
+	public static void main(String[] args) throws Exception {
+		// caminho para onde eu vou salvar o cadastros de clientes
+		String caminho = "C:\\Users\\Gerson Penha" + "\\Desktop\\clientes.docx";
+
 		// iniciando o controle para receber as informações pelo teclado
 		Controle controle = new Controle();
 
@@ -16,7 +24,7 @@ public class App {
 
 		// estrutura de repetição que irá manter o sistema ativo,
 		// enquanto for desejado
-		while (escolha != 5) {
+		while (escolha != 7) {
 			Menu.mostrarMenu();
 			escolha = controle.opcao();
 
@@ -37,6 +45,29 @@ public class App {
 				// expressao lambda, 'pessoa' aqui é uma variável
 				// poderia receber qualquer nome como: x, y, clientes, etc...
 				cadastros.forEach(pessoa -> System.out.println(pessoa));
+				if (cadastros.isEmpty()) {
+					System.out.println("Não há cadastros :(");
+				}
+			}
+
+			// serializar um objeto é transformalo numa representação
+			// binária, dai é possível salvar/escrever este objeto
+			// em disco rigido (HD).
+			if (escolha == 5) {
+				FileOutputStream canal = new FileOutputStream(caminho);
+				ObjectOutputStream escritor = new ObjectOutputStream(canal);
+				escritor.writeObject(cadastros);
+				escritor.close();
+				System.out.println("Cadastros de clientes salvo com sucesso!");
+			}
+
+			if (escolha == 6) {
+				FileInputStream canal = new FileInputStream(caminho);
+				ObjectInputStream leitor = new ObjectInputStream(canal);
+				// casting / cast -> casca
+				cadastros = (List<Cliente>) leitor.readObject();
+				leitor.close();
+				System.out.println("Cadastros lidos com sucesso!");
 			}
 
 		}
